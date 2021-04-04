@@ -88,7 +88,7 @@
                         </td>
 
                         <td>
-                            <a id='botonAnular' data-id={{c.id}} href="#"><i class="fa fa-times"></i></a>
+                            <a class='botonAnular' data-id={{c.id}} href="#"><i class="fa fa-times"></i></a>
                         </td>
 
                     </tr>
@@ -120,7 +120,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#botonAnular').on('click', function (e) {
+        $('.botonAnular').on('click', function (e) {
             var xid;
             xid=$(this).attr('data-id');
 

@@ -1,0 +1,128 @@
+{% extends "base.html.twig" %}
+{% block headercontent %}
+<div class="col-lg-10">
+    <h2>Usuarios</h2>
+    <h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('app_homepage')}}">Inicio</a>
+            </li>
+            <li class="breadcrumb-item active">
+                Usuarios
+            </li>
+        </ol>
+    </h4>
+</div>
+<div class="col-lg-2"></div>
+{% endblock %}
+{% block content %}
+<div class="box">
+    <div class="box-header">
+        <div class="input-group">
+            <span class="input-group-btn ">
+                <a class="btn btn-danger btn-flat" href="{{path('app_admin_users_index')}}"><i class="fa fa-home"></i>
+                    Cancelar </a>
+            </span>
+        </div><!-- /input-group -->
+        <h3>Crear Usuarios</h3>
+    </div>
+    <div class="box-body">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="form-group">
+                    {{form_label(form.name, 'Nombres')}}
+                    {{form_widget(form.name, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.name)}}
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="form-group">
+                    {{form_label(form.lastname, 'Apellidos')}}
+                    {{form_widget(form.lastname, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.lastname)}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-6">
+                <div class="form-group">
+                    {{form_label(form.address, 'Direccion')}}
+                    {{form_widget(form.address, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.address)}}
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-xs-6">
+                <div class="form-group">
+                    {{form_label(form.Postalcode, 'Codigo Postal')}}
+                    {{form_widget(form.Postalcode, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.Postalcode)}}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-6">
+                <div class="form-group">
+                    {{form_label(form.phone, 'Telefono')}}
+                    {{form_widget(form.phone, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.phone)}}
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-xs-6">
+                <div class="form-group">
+                    {{form_label(form.businessName, 'Razon Social')}}
+                    {{form_widget(form.businessName, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.businessName)}}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-6">
+                <div class="form-group">
+                    <p>Role del usuario: </p>
+                    <select id='selroles' name='selroles' class="form-control">
+                        <option value='ROLE_ADMIN'>Administrador</option>
+                        <option value='ROLE_CLIENT'>Cliente</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="form-group">
+                    {{ form_label(form.active,'Condición')}}
+                    <div class="form-group onoffswitch">
+                        {{ form_widget(form.active, {'attr':{'class':'js-switch'} })}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{form_errors(form)}}
+        {{form_rest(form)}}
+        {{form_end(form)}}
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+
+        var elem = document.querySelector('.js-switch');
+        var switchery = new Switchery(elem);
+    });
+
+
+</script>
+{% endblock %}

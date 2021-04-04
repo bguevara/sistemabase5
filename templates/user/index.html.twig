@@ -7,14 +7,14 @@
 
 {% block headercontent %}
 <div class="col-lg-10">
-    <h2>Sectores</h2>
+    <h2>Usuarios</h2>
     <h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ path('app_homepage')}}">Inicio</a>
             </li>
             <li class="breadcrumb-item active">
-                Sectores
+                Usuarios
             </li>
         </ol>
     </h4>
@@ -26,7 +26,7 @@
 <div class="box">
     <div class="box-header">
         <div class="row">
-            <form action="{{path('app_admin_sectors_search_index')}}" method="get">
+            <form action="{{path('app_admin_users_search_index')}}" method="get">
                 <div class="col-xs-12 col-lg-12 col-md-12">
 
                     <div class="input-group">
@@ -41,7 +41,7 @@
                             </button>
                         </span>
                         <span class="input-group-btn">
-                            <a class="btn btn-primary btn-flat" href="{{path('app_admin_sectors_new')}}"><i
+                            <a class="btn btn-primary btn-flat" href="{{path('app_admin_users_new')}}"><i
                                     class="fa fa-plus"></i> Nuevo </a>
                         </span>
                     </div><!-- /input-group -->
@@ -67,15 +67,27 @@
                         {{c.id}}
                     </td>
                     <td>
+                        {{ c.email}}
+                    </td>
+
+                    <td>
                         {{ c.name }}
                     </td>
-
                     <td>
-                        <a href="{{path('app_admin_sectors_edit', {'id':c.id})}}"><i class="fa fa-edit"></i></a>
+                        {{ c.lastname }}
                     </td>
 
                     <td>
-                        <a id='botonAnular' data-id={{c.id}} href="#"><i class="fa fa-times"></i></a>
+                        {{ c.roles | json_encode() }}
+                    </td>
+
+                    
+                    <td>
+                        <a href="{{path('app_admin_users_edit', {'id':c.id})}}"><i class="fa fa-edit"></i></a>
+                    </td>
+
+                    <td>
+                        <a class='botonAnular' data-id={{c.id}} href="#"><i class="fa fa-times"></i></a>
                     </td>
 
                 </tr>
@@ -108,11 +120,11 @@
 
 <script>
     $(document).ready(function () {
-        $('#botonAnular').on('click', function (e) {
+        $('.botonAnular').on('click', function (e) {
             var xid;
             xid=$(this).attr('data-id');
 
-            xurlp = "{{path('app_admin_sectors_remove', {'id':'xid'})}}";
+            xurlp = "{{path('app_admin_users_remove', {'id':'xid'})}}";
             xurlFinal=xurlp.replace('xid',xid);
 
 
@@ -142,7 +154,7 @@
                                 } else {
                                     swal("Proceso", "Proceso realizado satisfactoriamente", "success");
                                   
-                                    xurlp = "{{path('app_admin_sectors_index')}}";
+                                    xurlp = "{{path('app_admin_users_index')}}";
                                     setTimeout(function () {
                                         document.location.href = xurlp;
                                     }, 2000);

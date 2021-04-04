@@ -34,7 +34,6 @@ class Sectors
         $this->companies = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;

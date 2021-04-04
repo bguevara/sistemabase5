@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
@@ -23,6 +25,54 @@ class Users implements UserInterface
      */
     private $email;
 
+        
+    /**
+     * @ORM\Column(type="string", length=150) 
+     * @Assert\NotBlank(message="Campo nombres  no puede estar vacio.")
+     */
+    protected $name;
+
+
+     /**
+     * @ORM\Column(type="string", length=150) 
+     * @Assert\NotBlank(message="Campo apellidos no puede estar vacio.")
+     */
+    protected $lastname;
+
+
+
+    /**
+     * @ORM\Column(type="string", length=150, nullable=true) 
+     */
+    protected $businessName;
+
+    /**
+     * @ORM\Column(type="text", nullable=true) 
+     */
+    protected $address;    
+
+    /**
+     * @ORM\Column(type="string", length=150, nullable=true) 
+     */
+    protected $Postalcode;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true) 
+     * @Assert\NotBlank(message="Campo teléfono no puede estar vacio.")
+     */
+    protected $phone;
+
+     /**
+     * @ORM\Column(type="datetime") 
+     */
+    protected $lastConexion;    
+    
+    /**
+     * @ORM\Column(type="boolean") 
+     */
+    protected $active;    
+   
+
     /**
      * @ORM\Column(type="json")
      */
@@ -31,9 +81,18 @@ class Users implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Campo no puede estar vacio.")
+     * @Assert\Length(
+     *      min = 6,
+     *      max = 100,
+     *      minMessage = "el mínimo de caracteres para la clave es de 6",
+     *      maxMessage = "el maximo de caracteres para la clave es de 100"
+     * )
      */
     private $password;
 
+
+    
 
     public function __toString(): string
     {
@@ -67,16 +126,9 @@ class Users implements UserInterface
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
+    public function getRoles(): ?array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->roles;
     }
 
     public function setRoles(array $roles): self
@@ -86,12 +138,9 @@ class Users implements UserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -119,5 +168,101 @@ class Users implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getBusinessName(): ?string
+    {
+        return $this->businessName;
+    }
+
+    public function setBusinessName(?string $businessName): self
+    {
+        $this->businessName = $businessName;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPostalcode(): ?string
+    {
+        return $this->Postalcode;
+    }
+
+    public function setPostalcode(?string $Postalcode): self
+    {
+        $this->Postalcode = $Postalcode;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getLastConexion(): ?\DateTimeInterface
+    {
+        return $this->lastConexion;
+    }
+
+    public function setLastConexion(\DateTimeInterface $lastConexion): self
+    {
+        $this->lastConexion = $lastConexion;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
     }
 }
