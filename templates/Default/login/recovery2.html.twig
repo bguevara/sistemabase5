@@ -1,0 +1,130 @@
+{% extends "::basefront_inspinia.html.twig" %}
+{% block title 'Iniciar sesión' %}
+   {% block bodyclass 'login-page1'  %}
+   {% block body %}
+
+         
+    <div class="middle-box  text-center loginscreen animated ">
+         <div class="row">
+
+            <div class="col-md-12">
+       
+           
+            <div class="ibox-content2">
+            {#<div class="ibox-content"> #}               
+           {#<h1 class="logo-name">IN+</h1>#}
+             <div  style="margin: middle auto;">
+                     <a href="{{ path('app_admin_login')}}"><img alt="image"  style='height:50%;width:50%;' src="{{asset('app_inspinia/images/logocslc.png')}}"></a>
+            </div><!-- /.login-logo -->
+            
+               <br> 
+                <h2><strong>Sistema SAE</strong></h2>
+                <p><strong>Recuperar Contraseña</strong> </p>
+             <form id='formrecuperar' class="m-t" role="form" action="{{ path('app_recovery_password_process_interno')}}" method="post"> 
+
+    
+
+                  <div class="form-group">
+                        <input type="email" class="form-control" placeholder="correo electrónico" name="username" value="" required/>
+                  </div>
+ 
+ 
+        
+                <button type="submit" class="btn btn-danger block full-width m-b">Recuperar</button>
+
+                <hr>
+         
+                <p class='text-center'><a  href="{{path('app_admin_login')}}"><h4>Iniciar Sesión</h4></a></p>
+               
+            </form>
+           
+               
+           
+
+            </div> 
+
+            </div>
+         </div>    
+        </div>
+           
+                
+                
+        <div class="container">
+        {{ include ('AppBundle:Front:includes/flashMessages.html.twig')}} 
+        </div>
+
+          
+        {% endblock %}
+            
+        
+{% block stylesheets %}
+
+{#% set bg = random(['fondocslc.jpg','fondo.jpg','fondocslc.jpg','fondo2.jpg','fondocslc.jpg','fondo3.jpg']) %#}    
+
+{% set bg = random(['fondocslc.jpg']) %}    
+
+<style>
+.login-page1{
+    background-image: url('{{asset('app_inspinia/images/'~bg)}}');
+    /*opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier 
+    */
+    background-repeat: no-repeat;
+   /* background-position: right top;*/
+    background-attachment: fixed; 
+    width: 100%;
+    height: auto;
+    /*background-size: cortain;*/
+    background-size: cover;
+    opacity: 1;
+    text-color:#ffffff;
+    
+}
+
+.ibox-content2 {
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+
+</style>
+{% endblock %}
+
+{% block javascripts %}
+
+
+<script>
+
+
+
+$(document).ready(function () {
+
+         $("form[id='formrecuperar']").validate({
+                 rules: {
+                     email: {
+                         required: true,
+                         email: true
+                     },
+                     url: {
+                         required: true,
+                         url: true
+                     },
+                      min: {
+                         required: true,
+                         minlength: 6
+                     }
+                   
+                   
+                   }
+             });
+    
+});
+
+</script>
+{% endblock %}        
+
+
+
+

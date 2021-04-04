@@ -1,0 +1,54 @@
+<div id="flash-messages">  
+ <div class="flash-notif-success off"></div>
+ <div class="flash-notif-error off"></div>
+ <div class="flash-notif-info off"></div>
+ <div class="flash-notif-warning off"></div>
+
+    {% for flashMessage in app.session.flashbag.get('msg-success') %}
+   {#<div id='flashm1' class="alert alert-success" role="alert" style="width: 100%">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <h3>{{ flashMessage|trans|raw|nl2br }}</h3>
+        </div>#}
+
+        <div class="flash-notif-success on"></div>
+        <input type='hidden' id='flash_toast' value='{{ flashMessage|trans|raw|nl2br }}'>
+
+
+    {% endfor %}
+
+
+
+    {% for flashMessage in app.session.flashbag.get('msg-error') %}
+        {#<div id='flashm1' class="alert alert-danger" role="alert">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <h3>{{ flashMessage|trans|raw|nl2br }}</h3>
+        </div>#}
+
+        <div class="flash-notif-error on"></div>
+        <input type='hidden' id='flash_toast' value='{{ flashMessage|trans|raw|nl2br }}'>
+
+    {% endfor %}
+
+    
+
+    {% for flashMessage in app.session.flashbag.get('msg-info') %}
+         {#<div id='flashm1'  class="alert alert-info" role="alert">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <h3>{{ flashMessage|trans|raw|nl2br }}</h3>
+         </div>#}
+         <div class="flash-notif-info on"></div>
+        <input type='hidden' id='flash_toast' value='{{ flashMessage|trans|raw|nl2br }}'>
+    {% endfor %}
+
+
+    {% for flashMessage in app.session.flashbag.get('msg-warning') %}
+         {#<div id='flashm1'  class="alert alert-info" role="alert">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <h3>{{ flashMessage|trans|raw|nl2br }}</h3>
+         </div>#}
+         <div class="flash-notif-warning on"></div>
+         <input type='hidden' id='flash_toast' value='{{ flashMessage|trans|raw|nl2br }}'>
+    {% endfor %}
+
+</div>
+ 

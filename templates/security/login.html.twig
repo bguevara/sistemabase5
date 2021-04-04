@@ -1,0 +1,85 @@
+{% extends 'base_inspinia.html.twig' %}
+{% block title 'Iniciar sesión' %}
+   {% block bodyclass 'login-page1'  %}
+   {% block body %}
+
+         
+    <div class="middle-box  text-center loginscreen animated ">
+         <div class="row">
+            <div class="col-md-12">
+            <div class="ibox-content2">
+             <div  style="margin: middle auto;">
+                     <a href="{{ path('app_login')}}"><img alt="image"  style='height:50%;width:50%;' src="{{asset('app_inspinia/images/atrinium-logo.svg')}}"></a>
+            </div><!-- /.login-logo -->
+            
+               <br> 
+                <h2><strong>Sistema de Gestión Test</strong></h2>
+                <p>Iniciar sesión</p>
+                 <form class="m-t" role="form" method="post"> 
+
+                  <div class="form-group">
+                        <input type="email" class="form-control" placeholder="correo electrónico" value="{{ last_username }}" name="email" id="inputEmail" required autofocus>             
+
+                  </div>
+ 
+                    <div class="form-group">
+                     <input type="password" placeholder="Contraseña" name="password" id="inputPassword" class="form-control" required>
+
+                    </div>
+
+                  <input type="hidden" name="_csrf_token"  value="{{ csrf_token('authenticate') }}"        >
+                     {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+
+                <button type="submit" class="btn btn-danger block full-width m-b">Iniciar sesión</button>
+                <a  class="btn btn-sm btn-blue btn-block" href="{#{path('app_recovery_password')}#}">¿Contraseña perdida?</a></p>
+                <hr>
+            </form>
+            </div> 
+            </div>
+         </div>    
+        </div>
+        <div class="container">
+        {{ include ('Default/includes/flashMessages.html.twig')}} 
+        </div>
+        {% endblock %}
+            
+        
+{% block stylesheets %}
+{% set bg = random(['fondo_atrinium.jpeg']) %}    
+
+<style>
+.login-page1{
+    background-image: url('{{asset('app_inspinia/images/'~bg)}}');
+    /*opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier 
+    */
+    background-repeat: no-repeat;
+   /* background-position: right top;*/
+    background-attachment: fixed; 
+   /* width: 100%;*/
+    height: auto;
+    /*background-size: cortain;*/
+    background-size: cover;
+    opacity: 1;
+    text-color:#ffffff;
+    
+}
+
+.ibox-content2 {
+    background-color: #E0E1E3;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+
+</style>
+{% endblock %}

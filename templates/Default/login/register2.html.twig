@@ -1,0 +1,410 @@
+{% extends "::basefront_inspinia.html.twig" %}
+{% block title 'Registro' %}
+   {% block bodyclass 'login-page1'  %}
+   {% block body %}
+
+         
+    <div class="middle-box  text-center loginscreen animated ">
+         <div class="row">
+
+            <div class="col-md-12">
+       
+           
+            <div class="ibox-content2">
+            {#<div class="ibox-content"> #}               
+           {#<h1 class="logo-name">IN+</h1>#}
+             <div  style="margin: middle auto;">
+                     <a href="{{ path('app_admin_login')}}"><img alt="image"  style='height:60%;width:60%;' src="{{asset('app_inspinia/images/logonegro.png')}}"></a>
+            </div><!-- /.login-logo -->
+            
+           
+              
+               <p></p>
+            
+                    {{form_start(form)}}
+
+                    <input type='hidden' name='txtrole' id='txtrole' value='{{xrole}}'>
+                    <input type='hidden' name='txtafiliado' id='txtafiliado' value='{{xid}}'>
+  
+
+            
+        <div class="row text-left">
+          <div class="col-md-12 col-lg-12 col-xs-12">
+            <div class="form-group has-feedback"> 
+                {{form_label(form.nombreapellidos, 'Nombre y Apellidos')}}
+                {{form_widget(form.nombreapellidos,{'attr':{'class':'form-control','placeholder':'coloque sus nombres y apellidos'},'value': last_nombreapellidos| default(''), })}}
+                
+              </div>  
+            </div>
+        </div>   
+              
+        <div class="row text-left">
+            <div class="col-md-12 col-lg-12 col-xs-12">
+               <div class="form-group has-feedback"> 
+                {{form_label(form.email,'Correo Electrónico')}}
+                {{form_widget(form.email,{'attr':{'class':'form-control', 'placeholder':'coloque su correo electrónico ', 'autofocus':'autofocus'},'value': last_email | default('')})}}
+
+                {{form_errors(form.email)}}
+               </div>     
+            </div>
+         </div>   
+
+        <div class="row text-left">
+          <div class="col-md-10 col-lg-10 col-xs-12">
+                {{form_label(form.password.first,'Contraseña (1 caracter especial, 1 letra, 1 nro.)')}}
+            </div>
+            <div class="col-md-2 col-lg-2 col-xs-12">
+                <div class="form-group has-feedback"> 
+                  <a id='txtmostrar1' href="#"><i id='imostrar1'  style='font-size: 1.53em;' class="fa fa-eye-slash"></i></a>
+                 </div> 
+              </div>
+
+          <div class="col-md-10 col-lg-10 col-xs-12">
+               <div id='divpassword1' class="form-group has-error"> 
+                {{form_widget(form.password.first,{'attr':{'class':'form-control min', 'placeholder':'minimo 6 caracteres', 'autofocus':'autofocus'},'value':'' })}}
+                 {{form_errors(form.password.first)}}
+               </div>     
+            </div>
+          
+               <div class="col-md-2 col-lg-2 col-xs-12">
+                <div class="form-group has-feedback"> 
+                  <i   style='display:none;font-size: 2.73em;color:green;'  id='txtcorrecto' class="fa fa-check"></i>
+                  <i   style='display:none;font-size: 2.73em;color:red;' id='txterror' class="fa fa-times"></i>
+                 </div> 
+              </div>
+          </div>  
+
+
+        <div class="row text-left">
+          <div class="col-md-10 col-lg-10 col-xs-12">
+                {{form_label(form.password.second,'Repita la contraseña')}}
+            </div>
+            <div class="col-md-2 col-lg-2 col-xs-12">
+                <div class="form-group has-feedback"> 
+                  <a id='txtmostrar2' href="#"><i  id='imostrar2' style='font-size: 1.53em;' class="fa fa-eye-slash"></i></a>
+                 </div> 
+              </div>
+
+          <div class="col-md-10 col-lg-10 col-xs-12">
+               <div id='divpassword2' class="form-group has-error"> 
+                {{form_widget(form.password.second,{'attr':{'class':'form-control min', 'placeholder':'minimo 6 caracteres', 'autofocus':'autofocus'},'value':'' })}}
+                 {{form_errors(form.password.second)}}
+               </div>     
+            </div>
+          
+               <div class="col-md-2 col-lg-2 col-xs-12">
+                <div class="form-group has-feedback"> 
+                  <i   style='display:none;font-size: 2.73em;color:green;'  id='txtcorrecto2' class="fa fa-check"></i>
+                  <i   style='display:none;font-size: 2.73em;color:red;' id='txterror2' class="fa fa-times"></i>
+                 </div> 
+              </div>
+          </div>  
+
+
+
+
+             
+
+       <div class='row text-left'>
+          <div class="col-md-12 col-lg-12 col-xs-12">
+           <div class="form-group has-feedback">   
+            <label>Como te defines:</label>
+            <select class='browser-default custom-select' id='seltipousuario' name='seltipousuario'>
+            <option value='Blogger'>Gestiono un medio propio</option>
+            <option value='SEO'>Gestiono varios medios propios</option>
+            <option value='Empresa'>Gestiono el sitio corporativo de la empresa</option>
+            <option value='Agencia'>Gestiono los sitios de los clientes de mi agencia</option>
+            <option value='GranMedio'>Gestiono el sitio o sitios de un grupo editorial</option>
+           </select>
+          </div> 
+         </div>
+        </div>   
+
+
+
+
+        
+
+     
+            {{form_errors(form)}}
+            {{form_rest(form)}}
+            {{form_end(form)}}
+
+                <hr>
+
+        <div class='row'>
+          <div class="col-md-4 col-lg-4 col-xs-12">
+           <a  class="btn btn-sm btn-blue btn-block" href="{{path('app_recovery_password')}}">¿Contraseña<br> perdida?</a>
+         </div>
+         <div class="col-md-4 col-lg-4 col-xs-12">
+           <a  class="btn btn-sm btn-blue btn-block" href="{{path('app_admin_login')}}">Iniciar sesión</a>
+         </div>
+
+            <div class="col-md-4 col-lg-4 col-xs-12">
+              {% if xrole=='ROLE_EDITOR' %} 
+                 
+                {# Desactivado por boris se debe activar cuando el modulo anunciantes este en producción#}
+                 {#<p class='text-center'>
+                 <a  href="{{path('app_register_users')}}">Registrarme como Anunciante</a></p>#}
+               
+                {% endif %}
+
+               
+           </div>    
+
+        </div>   
+       
+       </form>
+     </div> 
+    </div>
+   </div>    
+   </div>
+          
+       
+       <div class="container">
+        {{ include ('AppBundle:Front:includes/flashMessages.html.twig')}} 
+        </div>
+         
+                
+                
+        {% endblock %}
+            
+        
+{% block stylesheets %}
+
+{% set bg = random(['fondo.jpg','fondo2.jpg','fondo3.jpg']) %}    
+
+<style>
+.login-page1{
+    background-image: url('{{asset('app_inspinia/images/'~bg)}}');
+    /*opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier 
+    */
+    background-repeat: no-repeat;
+   /* background-position: right top;*/
+    background-attachment: fixed; 
+    width: 100%;
+    height: auto;
+    /*background-size: cortain;*/
+    background-size: cover;
+    opacity: 1;
+    text-color:#ffffff;
+    
+}
+
+.ibox-content2 {
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.loginscreen.middle-box {
+    width: 400px;
+}
+
+.middle-box {
+    max-width: 400px;
+    z-index: 100;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+
+</style>
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script src="{{asset('bundles/app/plugins/sweetalert/js/sweetalert.min.js')}}" type="text/javascript"></script>
+
+
+<script>
+
+
+
+$(document).ready(function () {
+
+    //$('#form_password_second').attr('name','minpass');
+    //$('#form_password_first').attr('name','minpass');
+      var xpass;
+      var score = 0;
+
+
+        
+       $('#form_submit').attr('disabled','true');
+        
+      $('#form_password_first').keyup(function(){
+        var xpass;
+        xpass=$(this).val(); 
+        passwordStrength(xpass);
+      });
+
+
+    $('#form_password_second').keyup(function(){
+        var xpass;
+        xpass=$(this).val(); 
+        xpass1=$('#form_password_first').val();
+        passwordStrength2(xpass,xpass1);
+      });
+
+
+      /* Password strength indicator */
+      function passwordStrength(password, xpos) {
+       score=0;
+        //if password bigger than 6 give 1 point
+        if (password.length > 4) score++;
+
+        //if password has both lower and uppercase characters give 1 point  
+        if ((password.match(/[a-z]/)) && (password.match(/[A-Z]/))) score++;
+
+        //if password has at least one number give 1 point
+        if (password.match(/\d+/)) score++;
+
+        //if password has at least one special caracther give 1 point
+        if ( password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/) ) score=score+2;
+
+        //if password bigger than 12 give another 1 point
+        if (password.length > 10) score++;
+
+        console.log(score);
+        
+        // display indicator
+        //$("#jak_pstrength").removeClass(descClass[score-1]).addClass(descClass[score]).css(desc[score]);
+           if (score>=4) {
+               $('#divpassword1').removeClass('has-success');
+               $('#divpassword1').removeClass('has-warning');
+               $('#divpassword1').removeClass('has-error').addClass('has-success');
+               $('#txterror').hide();
+               $('#txtcorrecto').show();
+
+              }
+
+
+          if (score>=1 && score<=3) {
+              $('#divpassword1').removeClass('has-success');
+              $('#divpassword1').removeClass('has-warning');
+              $('#divpassword1').removeClass('has-error').addClass('has-warning');
+              $('#txterror').show();
+              $('#txtcorrecto').hide();
+
+              
+            }  
+
+
+           if (score<1) {
+
+              $('#divpassword1').removeClass('has-success');
+              $('#divpassword1').removeClass('has-warning');
+              $('#divpassword1').removeClass('has-error').addClass('has-error');
+              $('#txterror').show();
+              $('#txtcorrecto').hide();
+
+              
+             } 
+
+     }
+
+
+      function passwordStrength2(password, password1) {
+
+              if (password==password1) {
+               $('#divpassword2').removeClass('has-success');
+               $('#divpassword2').removeClass('has-warning');
+               $('#divpassword2').removeClass('has-error').addClass('has-success');
+                 if (score>=4) {
+                  $('#form_submit').removeAttr('disabled');
+                  $('#txterror2').hide();
+                  $('#txtcorrecto2').show();
+
+      
+                 } else {
+                   $('#form_submit').attr('disabled','true');
+                     $('#txterror2').show();
+                    $('#txtcorrecto2').hide();
+
+                 }
+                 
+
+               
+
+              } else {
+
+              $('#divpassword2').removeClass('has-success');
+              $('#divpassword2').removeClass('has-warning');
+              $('#divpassword2').removeClass('has-error').addClass('has-error');
+              $('#form_submit').attr('disabled','true');
+              $('#txterror2').show();
+              $('#txtcorrecto2').hide();
+
+
+              }
+     }
+
+
+       $('#txtmostrar1').click(function () {
+          var valor = $('#form_password_first').attr('type');
+          console.log(valor);
+
+        if  (valor=='text'){
+          $('#form_password_first').attr('type','password');
+          $('#imostrar1').removeAttr('class')
+          $('#imostrar1').attr('class','fa fa-eye-slash')
+        } else {
+
+          $('#form_password_first').attr('type','text');
+          $('#imostrar1').removeAttr('class')
+          $('#imostrar1').attr('class','fa fa-eye')
+        }
+          
+        });
+
+      
+
+      $('#txtmostrar2').click(function () {
+
+          var valor = $('#form_password_second').attr('type');
+          console.log(valor);
+
+        if  (valor=='text'){
+          $('#form_password_second').attr('type','password');
+          $('#imostrar2').removeAttr('class')
+          $('#imostrar2').attr('class','fa fa-eye-slash')
+        } else {
+
+          $('#form_password_second').attr('type','text');
+          $('#imostrar2').removeAttr('class')
+          $('#imostrar2').attr('class','fa fa-eye')
+        }
+
+        });
+
+
+
+         $("form[name='form']").validate({
+                 rules: {
+                     email: {
+                         required: true,
+                         email: true
+                     },
+                     url: {
+                         required: true,
+                         url: true
+                     },
+                      min: {
+                         required: true,
+                         minlength: 6
+                     }
+                   
+                   
+                   }
+             });
+    
+});
+
+</script>
+{% endblock %}        
+
+
+
+

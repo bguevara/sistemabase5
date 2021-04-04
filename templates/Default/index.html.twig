@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    <link href="{{asset('bundles/app/dist/easyautocomplete/easy-autocomplete.min.css')}}" rel="stylesheet" />
+    <link type="text/css" href="{{ asset('bundles/app/dist/dist/magnific-popup.css')}}" rel="stylesheet"/>
+    <style>
+    </style>
+{% endblock %}
+{% block headercontent %}
+    <h2>Panel</h2>
+    <h5>
+         <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                        <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="{{ path('app_homepage')}}">Inicio</a>
+                        </li>
+                     
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+    </h5>
+
+{% endblock %}
+
+{% block content %}
+   
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+
+
+
+   <script type="text/javascript">
+
+        $(document).ready(function () {
+        });
+    </script>
+{% endblock  %}

@@ -1,0 +1,96 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        </div>
+
+        {% if app.user  %}  
+
+           
+              {% if  is_granted('ROLE_ADMIN') %}
+                {% set xrole='Administrador' %}
+              {% endif %}
+
+              {% if  is_granted('ROLE_CLIENT') %}
+                {% set xrole='Cliente' %}
+              {% endif %}
+
+           
+
+            <ul class="nav navbar-top-links navbar-right">
+
+               <li style="padding: 20px">
+                    <a href="{{path('app_homepage')}}"><span class="m-r-sm text-muted welcome-message">Panel de Administración</span><span class='label label-success'>{{xrole}}</span></a>
+                </li>
+
+               
+             {#   <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <i class="fa fa-envelope fa-2x"></i><span class="label label-danger">{{xmensaje | length}}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages dropdown-menu-right">
+
+                       {% set i=0 %} 
+
+                       {% for  mensajes in xmensaje if i<4 %} 
+                        <li>
+                            <div class="dropdown-messages-box">
+
+                              
+                                {% if app.user.rutaimagen == NULL %}  
+                                       <a class="dropdown-item float-left" href="{{path('app_admin_show_mensaje',{'mensajeid':mensajes.id})}}">
+                                            <img alt="image" class="rounded-circle" src="{{asset("uploads/images/profile_sinfoto.jpg")}}">
+                                        </a>
+
+                                    {% else %}
+
+                                       <a class="dropdown-item float-left" href="{{path('app_admin_show_mensaje',{'mensajeid':mensajes.id})}}">
+                                            <img alt="image" class="rounded-circle" src="{{ asset(directorioimagenes~app.user.rutaImagen) }}">
+                                        </a>
+           
+                                 {% endif %}
+                               
+                                <div class="media-body">
+                                    <small class="float-right">{{mensajes.fecharegistro | date('d-m-Y') }}</small>
+                                    <a href="{{path('app_admin_show_mensaje',{'mensajeid':mensajes.id})}}"><small>{{mensajes.titulo}}</small></a>
+                                    . <br>
+                                    <small class="text-muted">{{mensajes.de}}</small>
+                            
+                               </div>
+                              
+                            </div>
+
+                        </li>
+                        <li class="dropdown-divider"></li>
+
+                        {% set i=i+1 %} 
+                 
+                       {% else %}
+
+                        <li class="dropdown-divider"></li>
+                       
+                       <li>
+                            <div class="text-center link-block">
+                                <a href="{{path('app_admin_todosmensaje')}}" class="dropdown-item">
+                                    <i class="fa fa-envelope"></i> <strong>Ver todos los mensajes..</strong>
+                                </a>
+                            </div>
+                        </li>     
+                      {% endfor %}   
+                    </ul>
+                </li> #}
+
+
+                <li>
+                    <a href="{{ path('app_logout')}}">
+                        <i class="fa fa-power-off  fa-2x"></i></a>
+                </li>
+               <!-- <li>
+                    <a class="right-sidebar-toggle">
+                        <i class="fa fa-tasks"></i>
+                    </a>
+                </li>-->
+            </ul>
+            {% endif %}  
+        </nav>
+        </div>

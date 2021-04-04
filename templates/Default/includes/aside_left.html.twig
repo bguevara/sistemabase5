@@ -1,0 +1,84 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="text-center">
+    <a style="color:white;" href="{{ path('app_homepage')}}">
+      <h1><strong>TEST</strong></h1>
+    </a>
+    <img alt="image" style='width:80%' src="{{asset('app_inspinia/images/atrinium-logo.svg')}}">
+  </div>
+  <div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu">
+      <li class="nav-header">
+        <div class="dropdown profile-element text-center">
+          {% if app.user  %}
+            <a href="{{ path('app_homepage')}}"><img alt="image" class="rounded-circle"
+                src="{{asset("uploads/images/profile_sinfoto.jpg")}}"></a>
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+              <span class="block m-t-xs font-bold">{#{app.user.nombreapellidos}#}</span>
+            </a>
+          {% endif %}
+        </div>
+        <div class="logo-element">
+          IN+
+        </div>
+      </li>
+     {% if  is_granted('ROLE_ADMIN') %}
+        <li id='li_test' data-toggle="tooltip" title="test">
+          <a href="{{ path('app_homepage')}}">
+            <i class="fa fa-money"></i>
+            <span>Test</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse in" aria-expanded="true">
+            <li>
+              <a href="{{path('app_admin_sectors_index')}}"><i class="fa fa-circle"></i>Sectores</a>
+              <b class="arrow"></b>
+            </li>
+            <li>
+              <a href="{{path('app_admin_companies_index')}}"><i class="fa fa-building"></i>Empresas</a>
+              <b class="arrow"></b>
+            </li>
+          </ul>
+        </li>
+      {% endif %}
+
+
+      {% if  is_granted('ROLE_CLIENT') %}
+      <li id='li_test' data-toggle="tooltip" title="test">
+        <a href="{{ path('app_homepage')}}">
+          <i class="fa fa-money"></i>
+          <span>Test</span>
+          <span class="fa arrow"></span>
+        </a>
+        <ul class="nav nav-second-level collapse in" aria-expanded="true">
+          <li>
+            <a href="{{path('app_admin_companies_index')}}"><i class="fa fa-building"></i>Empresas</a>
+            <b class="arrow"></b>
+          </li>
+        </ul>
+      </li>
+    {% endif %}
+
+      <!-- end divnav metismenu-->
+  </div>
+  <!-- end sidebar-collapse-->
+</nav>
+
+{% block javascripts %}
+<script src="{{ asset('bundles/app/plugins/jQuery/jQuery-2.1.4.min.js')}}" type="text/javascript"></script>
+
+<script>
+
+  $(document).ready(function () {
+
+    x = $(location).attr('href');      // http://www.refulz.com:8082/index.php#tab2
+    // y=$(location).attr('pathname');  // index.php
+    if (x.search("/admin") > 0) {
+      $("#li_test").removeClass('active');
+      $("#li_test").addClass('active');
+      $("#ul_test").removeClass('collapse');
+      $("#ul_test").addClass('in collapse');
+    }
+    
+  });
+</script>
+{% endblock %}

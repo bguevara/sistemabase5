@@ -1,0 +1,85 @@
+{% extends "base.html.twig" %}
+{% block headercontent %}
+<div class="col-lg-10">
+    <h2>Empresas</h2>
+    <h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('app_homepage')}}">Inicio</a>
+            </li>
+            <li class="breadcrumb-item active">
+                Empresas
+            </li>
+        </ol>
+    </h4>
+</div>
+<div class="col-lg-2"></div>
+{% endblock %}
+{% block content %}
+<div class="box">
+    <div class="box-header">
+        <div class="input-group">
+            <span class="input-group-btn ">
+                <a class="btn btn-danger btn-flat" href="{{path('app_admin_companies_index')}}"><i class="fa fa-home"></i>
+                    Cancelar </a>
+            </span>
+        </div><!-- /input-group -->
+        <h3>Editar Empresa</h3>
+    </div>
+    <div class="box-body">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="form-group">
+                    {{form_label(form.name, 'Nombre')}}
+                    {{form_widget(form.name, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.name)}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="form-group">
+                    {{form_label(form.phone, 'Teléfono')}}
+                    {{form_widget(form.phone, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.phone)}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="form-group">
+                    {{form_label(form.email, 'Email')}}
+                    {{form_widget(form.email, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.email)}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="form-group">
+                    {{form_label(form.sector, 'Sector')}}
+                    {{form_widget(form.sector, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.sector)}}
+                </div>
+            </div>
+        </div>
+
+
+        {{form_errors(form)}}
+        {{form_rest(form)}}
+        {{form_end(form)}}
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        var elem = document.querySelector('.js-switch');
+        var switchery = new Switchery(elem);
+    });
+</script>
+{% endblock %}
