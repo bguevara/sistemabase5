@@ -1,14 +1,14 @@
 {% extends "base.html.twig" %}
 {% block headercontent %}
 <div class="col-lg-10">
-    <h2>Sectores</h2>
+    <h2>Usuarios y Sectores</h2>
     <h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ path('app_homepage')}}">Inicio</a>
             </li>
             <li class="breadcrumb-item active">
-                Sectores
+                Usuarios y Sectores
             </li>
         </ol>
     </h4>
@@ -20,23 +20,35 @@
     <div class="box-header">
         <div class="input-group">
             <span class="input-group-btn ">
-                <a class="btn btn-danger btn-flat" href="{{path('app_admin_sectors_index')}}"><i class="fa fa-home"></i>
+                <a class="btn btn-danger btn-flat" href="{{path('app_admin_user_sectors_index')}}"><i class="fa fa-home"></i>
                     Cancelar </a>
             </span>
         </div><!-- /input-group -->
-        <h3>Editar Sector</h3>
+        <h3>Crear Sector</h3>
     </div>
     <div class="box-body">
         {{ form_start(form) }}
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="form-group">
-                    {{form_label(form.name, 'Nombre')}}
-                    {{form_widget(form.name, {'attr':{'class':'form-control'} })}}
-                    {{form_errors(form.name)}}
+                    {{form_label(form.users, 'Usuario')}}
+                    {{form_widget(form.users, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.users)}}
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="form-group">
+                    {{form_label(form.sectors, 'Sectores')}}
+                    {{form_widget(form.sectors, {'attr':{'class':'form-control'} })}}
+                    {{form_errors(form.sectors)}}
+                </div>
+            </div>
+        </div>
+
+
         {{form_errors(form)}}
         {{form_rest(form)}}
         {{form_end(form)}}
