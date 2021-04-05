@@ -192,5 +192,87 @@ class SectorController extends AbstractController
     return new Response(json_encode($data));
 
     }
+
+
+     /**
+     * @Route("/app/admin/get/sectors", name="app_admin_sectors_get", requirements={"_method":"POST"})
+     */
+    public function getSectorsAction(Request $request)
+    {
+        $em = $this->em;
+
+        $roleUser=$this->getUser()->getRoles()[0];
+        $userId=$this->getUser()->getId();
+     
+        if ($roleUser=='ROLE_ADMIN') {
+            $query = "SELECT s.id,s.name FROM App\Entity\Sectors s "
+            .  "ORDER BY s.name DESC ";
+
+        } else {
+             $query = "SELECT s.id,s.name FROM App\Entity\Companies l join l.sector s "
+             .  "WHERE  "
+             . " s.id in (SELECT se.id FROM App\Entity\UsersSector k join k.users u join k.sectors se  where u.id='$userId' )"
+             .  "ORDER BY l.name DESC ";
+        }    
+        
+        $entities = $em->createQuery($query);        
+      
+        if($entities)
+        {
+            $data = array("status" => "success",
+            "code" => 200,
+            'guardado' => 1,
+            "msg" => 'El proceso se realizo con exito..');
+            return new Response(json_encode($data));
+
+        }
+    
+        $data = array("status" => "error",
+        "code" => 400,
+        'guardado' => 0,
+        "msg" => 'El proceso no se realizo, error al guardar..');
+    return new Response(json_encode($data));
+
+    }
+
+
+      /**
+     * @Route("/app/get/sectors", name="app_sectors_get", requirements={"_method":"POST"})
+     */
+    public function optgetSectors(Request $request)
+    {
+        $em = $this->em;
+        $roleUser=$this->getUser()->getRoles()[0];
+        $userId=$this->getUser()->getId();
+        if ($roleUser=='ROLE_ADMIN') {
+            $query = "SELECT distinct s.id,s.name FROM App\Entity\Sectors s "
+            .  "ORDER BY s.name ASC ";
+
+        } else {
+             $query = "SELECT distinct s.id,s.name FROM App\Entity\Companies l join l.sector s "
+             .  "WHERE  "
+             . " s.id in (SELECT se.id FROM App\Entity\UsersSector k join k.users u join k.sectors se  where u.id='$userId' )"
+             .  "ORDER BY l.name ASC ";
+        }    
+        $response=[];
+        $entities = $em->createQuery($query)->getResult();        
+        if ($entities) {
+            foreach ($entities as $value) {
+                $dato['id'] = $value['id'];
+                $dato['text'] = trim($value['name']);
+                $dato['seleccionado'] = 0;
+                $response[] = $dato;
+            }
+        } else {
+            $dato['id'] = 0;
+            $dato['text'] = 'cliente no tiene asociados sectores';
+            $dato['seleccionado'] = 0;
+            $response[] = $dato;
+        }
+        $respuesta = new Response(json_encode($response));
+        $respuesta->headers->set('Content-Type', 'application/json');
+        return $respuesta;
+    }
+
    
 }

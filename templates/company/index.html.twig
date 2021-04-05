@@ -36,6 +36,9 @@
                 {% endif %}
 
                      <input class="form-control" placeholder="Buscar.." name="text" type="text" value='{{criterio}}'>
+
+                     <select class='form-control'  id='selsector' name='selsector'></select>
+
                      <span class="input-group-btn">
                          <button class="btn btn-default btn-flat" type="submit"><i class="fa fa-search"></i> Buscar </button>
                      </span>        
@@ -170,6 +173,33 @@
             );
 
         });
+
+
+
+            var data1 = {
+                parentid: 0
+            };
+            var $mascota_selector2 = $('select[id*="selsector"]');
+            $mascota_selector2.children().remove();
+            $.ajax({
+                type: 'post',
+                url: "{{ path('app_sectors_get') }}",
+                data: data1,
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (i, e) {
+                        if (e.seleccionado == 1) {
+                            $mascota_selector2.append('<option value=' + e.id + ' selected>' + e.text + '</option>').trigger('change');
+                        } else {
+                            $mascota_selector2.append('<option value=' + e.id + '>' + e.text + '</option>').trigger('change');
+                        }
+                    });
+                }
+            });
+          
+
+
+
 
     });
     </script>

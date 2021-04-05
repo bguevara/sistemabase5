@@ -9,6 +9,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Companies;
 use App\Form\CompaniesType;
+use App\Form\CompaniesEditType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -28,9 +29,22 @@ class CompanyController extends AbstractController
      */
     public function indexAction(Request $request)
     {  
+
+        $roleUser=$this->getUser()->getRoles()[0];
+        $userId=$this->getUser()->getId();
+
         $em = $this->em;
-        $query = "SELECT l FROM App\Entity\Companies l "
-                . "ORDER BY l.name DESC ";
+
+       
+        if ($roleUser=='ROLE_ADMIN') {
+            $query = "SELECT l FROM App\Entity\Companies l "
+                    . "ORDER BY l.name DESC ";
+        } else {
+             $query = "SELECT l FROM App\Entity\Companies l join l.sector s "
+             .  "WHERE s.id in (SELECT se.id FROM App\Entity\UsersSector k join k.users u join k.sectors se  where u.id='$userId' )"
+             .  "ORDER BY l.name DESC ";
+        }    
+
         $entities = $em->createQuery($query);        
         $pagination = $this->paginator->paginate(
                 $entities,
@@ -50,10 +64,28 @@ class CompanyController extends AbstractController
     {  
         $em = $this->em;
         $text = $request->get('text');
-        $query = "SELECT l FROM App\Entity\Companies l "
-                . "WHERE "
-                . "l.name LIKE :text or l.email like :text or l.phone like :text   "
-                . "ORDER BY l.name DESC ";
+        $selSector=$request->get('selsector');
+
+        $roleUser=$this->getUser()->getRoles()[0];
+        $userId=$this->getUser()->getId();
+        $criterio='';
+        if ($selSector<>''){
+            $criterio=" s.id=$selSector and ";
+        }
+      
+         if ($roleUser=='ROLE_ADMIN') {
+            $query = "SELECT l FROM App\Entity\Companies l join l.sector s "
+            . "WHERE $criterio "
+            . "(l.name LIKE :text or l.email like :text or l.phone like :text ) "
+            . "ORDER BY l.name DESC ";
+        } else {
+             $query = "SELECT l FROM App\Entity\Companies l join l.sector s "
+             .  "WHERE $criterio "
+             . " (l.name LIKE :text or l.email like :text or l.phone like :text)  and "
+             . " s.id in (SELECT se.id FROM App\Entity\UsersSector k join k.users u join k.sectors se  where u.id='$userId' )"
+             .  "ORDER BY l.name DESC ";
+        }    
+
         $entities = $em->createQuery($query);        
         $entities->setParameter('text', '%'.$text.'%');
         $pagination = $this->paginator->paginate(
@@ -85,11 +117,15 @@ class CompanyController extends AbstractController
     public function updateAction($id,Request $request)
     {
         $em = $this->em;
+        $sectorId=$request->get('selsector');
+        $sector = $em->getRepository('App\Entity\Sectors')->find($sectorId);        
+
         $entity = $em->getRepository('App\Entity\Companies')->find($id);        
         $form = $this->editForm($entity);
         $form->handleRequest($request);
         if($form->isValid())
         {
+            $entity->setSector($sector);
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('msg-success', 'Registro modificado con exito!');
@@ -103,7 +139,7 @@ class CompanyController extends AbstractController
     
     private function editForm(Companies $entity)
     {
-        $form = $this->createForm(CompaniesType::class, $entity, array(
+        $form = $this->createForm(CompaniesEditType::class, $entity, array(
             'action'=>$this->generateUrl('app_admin_companies_update', array('id'=>$entity->getId())),
             'method'=>'PUT'
         ))
@@ -131,6 +167,9 @@ class CompanyController extends AbstractController
     {
         $em= $this->em;
         $entity = new Companies();
+        $sectorId=$request->get('selsector');
+        $sector = $em->getRepository('App\Entity\Sectors')->find($sectorId);        
+
         $form = $this->newForm($entity);
         $form->handleRequest($request);
         if($form->isValid())
@@ -140,6 +179,8 @@ class CompanyController extends AbstractController
                 $this->get('session')->getFlashBag()->add('msg-success', 'Ya existe un Registro con el mismo nombre!');
                 return $this->redirect($this->generateUrl('app_admin_companies_index')); 
             } else {
+                $entity->setSector($sector);
+          
                 $em->persist($entity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('msg-success', 'Registro creado con exito!');

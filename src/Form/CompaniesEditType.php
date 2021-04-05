@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 
-class CompaniesType extends AbstractType
+class CompaniesEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,6 +17,7 @@ class CompaniesType extends AbstractType
             ->add('name')
             ->add('phone',telType::class, array('required' => true))
             ->add('email',EmailType::class, array('required' => true))
+      
         ;
     }
 
